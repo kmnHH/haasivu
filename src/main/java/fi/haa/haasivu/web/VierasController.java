@@ -32,14 +32,20 @@ public class VierasController {
 	@RequestMapping(value = "/")
 	public String lisaaVieras(Model model){
 	 model.addAttribute("vieras", new Vieras());
-	 return "lisaaVieras";
-	}
+	 return "lisaaVieras"; 
+	} 
+	
+	
+	
+	
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String tallennaOsallistujat(Vieras vieras){
 		if(vieras.getOsallistuminen().equals("Kyllä")) {
-			repo.save(vieras); 
+			repo.save(vieras);   
+			return "tervetuloa";
+		} else { 
+	 return "harmi"; 
 		}
-	 return "redirect:vieraslista";
-	}
+	} 
 
 }
