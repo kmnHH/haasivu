@@ -51,7 +51,7 @@ public class VierasController {
 	public String tallennaOsallistujat(Vieras vieras){ 
 		// mikäli vieraan vastaa osallistumiseen "Kyllä", hänet tallennetaan vierasrepositoryyn ja selain ohjautuu tervetuloa thymeleaf sivulle
 		if(vieras.getOsallistuminen().equals("Kyllä")) {
-			repo.save(vieras);   
+			repo.save(vieras);    
 			return "tervetuloa"; 
 		// mikäli vastaus on jotakin muuta, ohjataan selain harmi thymeleaf sivulle	
 		} else {   
@@ -66,9 +66,9 @@ public class VierasController {
 	
 	 @RequestMapping(value = "/edit/{id}",method = RequestMethod.GET) 
 	 	public String muokkaaVieras(@PathVariable("id") Long vierasId, Model model) { 
-		// mahdollistetaan vieraan tietojen muokkaaminen hyödyntämällä vieraan id-arvoa ja tallentamalla uudet tiedot vieraan olion
+		// mahdollistetaan vieraan tietojen muokkaaminen hyödyntämällä vieraan id-arvoa ja tallentamalla uudet tiedot vieraan olioon
 		 Optional <Vieras> vieras = repo.findById(vierasId);
-		 model.addAttribute("vieras", vieras); 
+		 model.addAttribute("vieras", vieras);  
 		 return "muokkaavieras";
 	 }   
 	 
@@ -76,7 +76,15 @@ public class VierasController {
 	 //mahdollistetaan vieraan tietojen poistaminen admin tunnuksilla
 	    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 	    public String poistaVieras(@PathVariable("id") Long vierasId, Model model) {
-	    	repo.deleteById(vierasId);
+	    	repo.deleteById(vierasId); 
+	        return "redirect:../vieraslista";
+	    }      
+	 
+	 @PreAuthorize("hasAuthority('ADMIN')") 
+	 //mahdollistetaan eiVieraan tietojen poistaminen admin tunnuksilla
+	    @RequestMapping(value = "/delete/eiVieras{id}", method = RequestMethod.GET)
+	    public String poistaEiVieras(@PathVariable("id") Long vierasId, Model model) { 
+	    	eiTulevatRepo.deleteById(vierasId);
 	        return "redirect:../vieraslista";
 	    }     
 

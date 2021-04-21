@@ -124,11 +124,11 @@ i {
 							</tr>  
 						</thead>  
 						<tbody>
-    						<tr th:each = "vieras : ${eiTulevat}">
-    							<td th:text="${vieras.etunimi}"></td>
-    							<td th:text="${vieras.sukunimi}"></td>  	  
- 								<td><a th:href="@{/edit/{id}(id=${vieras.id})}"><i class="fas fa-pen"></i></a></td>	   		 
- 								<td><a th:href="@{/delete/{id}(id=${vieras.id})}"><i class="far fa-trash-alt"></i></a></td>
+    						<tr th:each = "eivieras : ${eiTulevat}">
+    							<td th:text="${eivieras.etunimi}"></td>
+    							<td th:text="${eivieras.sukunimi}"></td>  	  
+ 								<td><a th:href="@{/edit/{id}(id=${eivieras.id})}"><i class="fas fa-pen"></i></a></td>	   		 
+ 								<td><a th:href="@{/delete/eiVieras{id}(id=${eivieras.id})}"><i class="far fa-trash-alt"></i></a></td>
     						</tr>  
     					</tbody>
     	 			</table>    
