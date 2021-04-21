@@ -63,9 +63,12 @@ div.carousel-inner {
   		</button>
 	</div> 
 	<div class="container"> 
+		<form th:action="@{/logout}" method="post">
+			<input type="submit" value="Kirjaudu ulos" class="btn btn-outline-danger btn-sm" /> 
+		</form>
 		<br><br>
 		<p> Harmi ettet pääse paikalle!</p> 
-		<p> Tässä kuitenkin pieni kuvatervehdys meidän perheeltä :)</p> 
+		<p> Tässä kuitenkin pieni kuvatervehdys meidän perheeltä :)</p>  
 	</div>
 </body>
 </html>

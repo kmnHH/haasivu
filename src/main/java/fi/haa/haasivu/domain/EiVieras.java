@@ -20,8 +20,7 @@ public class EiVieras {
 			this.id = id;
 			this.etunimi = etunimi;
 			this.sukunimi = sukunimi;
-			this.osallistuminen = osallistuminen;
-			
+			this.osallistuminen = osallistuminen;	
 	}  
 		
 	public EiVieras() {}

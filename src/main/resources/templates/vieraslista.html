@@ -9,32 +9,12 @@
 <style>  
 body {
   background-image: url("https://cdn.pixabay.com/photo/2016/11/22/19/05/couple-1850073_960_720.jpg"); 
-   
   background-size: cover;  
-  
 }
-
 
 h2 { 
 color: white;
 } 
-
-input { 
-color: navyblue; 
-
-} 
-
-label {  
-color: black;
-} 
-
-br { 
-color: green; 
-} 
-
-a { 
-color: white;
- }  
  
 .container-lg {
   background-color: grey;  
@@ -79,9 +59,6 @@ i {
   width: 180%;	
  } 
  
- 
-
-
 /* width */
 ::-webkit-scrollbar {
   width: 20px;
@@ -108,7 +85,6 @@ i {
 </head> 
 
 <body>  
-	
 	<div>
 		<h1>Vieraat</h1>
 		<div class="container-xl">
@@ -116,7 +92,6 @@ i {
 		 		<h2>Osallistujat</h2> 
 			 	<!-- luodaan taulukko, johon haetaan tallennettujen vieraiden tiedot -->
 				<table class="table table-success table-striped">
-		
 					<thead>
 						<tr class="table-secondary">
 		    				<th scope="col">Etunimi</th>
@@ -136,30 +111,30 @@ i {
     				</tbody>
      			 </table>   
      			<div class="btn btn-dark" > <a href="/">Takaisin ilmoittautumiseen</a></div> 
-    		 	<br><br>
+    		 	<br><br> 
+    		 	<!-- Vain Admin oikeuden omaava voi nähdä ei tulevien vieraiden listan -->
      			<div sec:authorize="hasAuthority('ADMIN')"> 
-		 		<h2>Ei pääse paikalle</h2> 
-		 		<!-- luodaan taulukko, johon haetaan tallennettujen vieraiden tiedot -->
-	 			<table class="table table-success table-striped">
-		
-				<thead>
-					<tr class="table-secondary">
-		   				<th scope="col">Etunimi</th>
-		    			<th scope="col">Sukunimi</th>  
-					</tr>  
-				</thead>  
-				<tbody>
-    				<tr th:each = "vieras : ${eiTulevat}">
-    					<td th:text="${vieras.etunimi}"></td>
-    					<td th:text="${vieras.sukunimi}"></td>  	  
- 						<td><a th:href="@{/edit/{id}(id=${vieras.id})}"><i class="fas fa-pen"></i></a></td>	   		 
- 						<td><a th:href="@{/delete/{id}(id=${vieras.id})}"><i class="far fa-trash-alt"></i></a></td>
-    				</tr>  
-    			</tbody>
-    	 		</table>    
-     		</div>  
+		 			<h2>Ei pääse paikalle</h2> 
+		 			<!-- luodaan taulukko, johon haetaan tallennettujen ei tulevien vieraiden tiedot -->
+	 				<table class="table table-success table-striped">
+						<thead>
+							<tr class="table-secondary">
+		   						<th scope="col">Etunimi</th>
+		    					<th scope="col">Sukunimi</th>  
+							</tr>  
+						</thead>  
+						<tbody>
+    						<tr th:each = "vieras : ${eiTulevat}">
+    							<td th:text="${vieras.etunimi}"></td>
+    							<td th:text="${vieras.sukunimi}"></td>  	  
+ 								<td><a th:href="@{/edit/{id}(id=${vieras.id})}"><i class="fas fa-pen"></i></a></td>	   		 
+ 								<td><a th:href="@{/delete/{id}(id=${vieras.id})}"><i class="far fa-trash-alt"></i></a></td>
+    						</tr>  
+    					</tbody>
+    	 			</table>    
+     			</div>  
+     		</div> 
      	</div> 
-     </div> 
      </div>
 </body>
 </html>

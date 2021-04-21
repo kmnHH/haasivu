@@ -32,7 +32,6 @@ public class VierasController {
         return "login";
     }	
 	
-	
 	@RequestMapping(value="/vieraslista")
 	public String vierasLista(Model model) { 
 	//tallennetaan model-olioon kaikki vieraat vierasrepositorysta ja viedään ne vieraslista thymeleafille
@@ -48,7 +47,6 @@ public class VierasController {
 	 return "lisaaVieras"; 
 	} 
 	
-	
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String tallennaOsallistujat(Vieras vieras){ 
 		// mikäli vieraan vastaa osallistumiseen "Kyllä", hänet tallennetaan vierasrepositoryyn ja selain ohjautuu tervetuloa thymeleaf sivulle
@@ -56,16 +54,16 @@ public class VierasController {
 			repo.save(vieras);   
 			return "tervetuloa"; 
 		// mikäli vastaus on jotakin muuta, ohjataan selain harmi thymeleaf sivulle	
-		} else {  
+		} else {   
+			// Vieras-oliosta muutetaan EiVieras-olio, luomalla ensin uusi EiVieras-olio ja tallentamalla sille Vieras-olion tietoja
 			EiVieras eivieras = new EiVieras(); 
 			eivieras.setEtunimi(vieras.getEtunimi());   
 			eivieras.setSukunimi(vieras.getSukunimi());
 			eiTulevatRepo.save(eivieras);
-	 return "harmi"; 
+			return "harmi"; 
 		}
 	}  
 	
-	 
 	 @RequestMapping(value = "/edit/{id}",method = RequestMethod.GET) 
 	 	public String muokkaaVieras(@PathVariable("id") Long vierasId, Model model) { 
 		// mahdollistetaan vieraan tietojen muokkaaminen hyödyntämällä vieraan id-arvoa ja tallentamalla uudet tiedot vieraan olion

@@ -28,7 +28,6 @@ public class HaasivuApplication {
 	@Bean
 	public CommandLineRunner vierasEsim(VierasRepo repo, KayttajaRepository kayttajaRepo, EiTulevatRepo eiTulevatRepo) {
 		return (args) -> {
-			log.info("save a couple of books");
 			
 			// luodaan sivulle yksi esimerkki vieras
 			repo.save(new Vieras(1L, "Essi", "Esimerkki", "Kyllä", "kasvis"));   
@@ -46,7 +45,8 @@ public class HaasivuApplication {
 			log.info("vieraat");
 			for (Vieras vieras : repo.findAll()) {
 				log.info(vieras.toString());
-			}  
+			}   
+			//tarkistetaan konsolissa että eiVieraat ovat tallentuneet repoon
 			log.info("eivieraat");
 			for (EiVieras eivieras : eiTulevatRepo.findAll()) {
 				log.info(eivieras.toString());
