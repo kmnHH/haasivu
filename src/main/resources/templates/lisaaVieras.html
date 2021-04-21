@@ -3,7 +3,8 @@
 <meta charset="UTF-8"> 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ilmoittautuminen</title> 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" /> 
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 <style>  
 body {
   background-image: url("https://cdn.pixabay.com/photo/2016/11/22/19/05/couple-1850073_960_720.jpg"); 
@@ -84,23 +85,18 @@ h1{
 			<input type="text" th:field="*{ruokavalio}" /> 
 			<div  style="clear: both; display: block; height: 10px;"></div>	 
 								
-		  	
-     
 			<div style="clear: both; display: block; height: 10px;"></div>
-			<input type="submit" value="Tallenna"></input>  
-			
-			
+			<input type="submit" value="Tallenna"></input> 
 		</form> 
-		
+	
 		<form th:action="@{vieraslista}" action="#" method="post"> 
 			<div style="clear: both; display: block; height: 20px;"> 
 			</div>
 			<input style="height: 40px; width: 90px" type="submit" value="Vieraslista"></input>
 		</form>  
-		
-		
+		<p> </p>
 		<form th:action="@{/logout}" method="post">
-			<input type="submit" value="Sign Out" class="btn btn-sm btn-danger"/>
+			<input type="submit" value="Kirjaudu ulos" class="btn btn-outline-danger"/> 
 		</form>
 	
 		

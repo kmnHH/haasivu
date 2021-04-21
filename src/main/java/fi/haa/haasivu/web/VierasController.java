@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import fi.haa.haasivu.domain.EiTulevatRepo;
+import fi.haa.haasivu.domain.EiVieras;
 import fi.haa.haasivu.domain.Vieras;
 import fi.haa.haasivu.domain.VierasRepo;
 
@@ -20,50 +22,60 @@ import fi.haa.haasivu.domain.VierasRepo;
 public class VierasController { 
 	
 	@Autowired
-	private VierasRepo repo; 
+	private VierasRepo repo;  
+	
+	@Autowired
+	private EiTulevatRepo eiTulevatRepo;
 	
 	@RequestMapping(value="/login")
     public String login() {	
         return "login";
     }	
 	
-	public long laskeVieraat() { 
-		
-		return repo.count();
-	} 
 	
 	@RequestMapping(value="/vieraslista")
-	public String vierasLista(Model model) {
-	model.addAttribute("vieraat", repo.findAll());
+	public String vierasLista(Model model) { 
+	//tallennetaan model-olioon kaikki vieraat vierasrepositorysta ja viedään ne vieraslista thymeleafille
+	model.addAttribute("vieraat", repo.findAll()); 
+	model.addAttribute("eiTulevat", eiTulevatRepo.findAll());
 	return "vieraslista";
 	} 
 	
 	@RequestMapping(value = "/")
-	public String lisaaVieras(Model model){
+	public String lisaaVieras(Model model){ 
+	// luodaan uusi vieras ja lisätään se vierasrepositoryyn	
 	 model.addAttribute("vieras", new Vieras());
 	 return "lisaaVieras"; 
 	} 
 	
 	
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String tallennaOsallistujat(Vieras vieras){
+	public String tallennaOsallistujat(Vieras vieras){ 
+		// mikäli vieraan vastaa osallistumiseen "Kyllä", hänet tallennetaan vierasrepositoryyn ja selain ohjautuu tervetuloa thymeleaf sivulle
 		if(vieras.getOsallistuminen().equals("Kyllä")) {
 			repo.save(vieras);   
-			return "tervetuloa";
-		} else { 
+			return "tervetuloa"; 
+		// mikäli vastaus on jotakin muuta, ohjataan selain harmi thymeleaf sivulle	
+		} else {  
+			EiVieras eivieras = new EiVieras(); 
+			eivieras.setEtunimi(vieras.getEtunimi());   
+			eivieras.setSukunimi(vieras.getSukunimi());
+			eiTulevatRepo.save(eivieras);
 	 return "harmi"; 
 		}
 	}  
 	
-	 @PreAuthorize("hasAuthority('ADMIN')")
+	 
 	 @RequestMapping(value = "/edit/{id}",method = RequestMethod.GET) 
 	 	public String muokkaaVieras(@PathVariable("id") Long vierasId, Model model) { 
-		Optional <Vieras> vieras = repo.findById(vierasId);
+		// mahdollistetaan vieraan tietojen muokkaaminen hyödyntämällä vieraan id-arvoa ja tallentamalla uudet tiedot vieraan olion
+		 Optional <Vieras> vieras = repo.findById(vierasId);
 		 model.addAttribute("vieras", vieras); 
 		 return "muokkaavieras";
 	 }   
 	 
-	 @PreAuthorize("hasAuthority('ADMIN')")
+	 @PreAuthorize("hasAuthority('ADMIN')") 
+	 //mahdollistetaan vieraan tietojen poistaminen admin tunnuksilla
 	    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 	    public String poistaVieras(@PathVariable("id") Long vierasId, Model model) {
 	    	repo.deleteById(vierasId);

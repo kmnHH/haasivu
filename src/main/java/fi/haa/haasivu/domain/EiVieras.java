@@ -6,29 +6,26 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Vieras { 
-	
+public class EiVieras { 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String etunimi; 
 	private String sukunimi; 
 	private String osallistuminen; 
-	private String ruokavalio; 
 	
-	// Luodaan entity tyyppinen luokkaolio Vieras, jolle annetaan tarvittavat attribuutit sekä getterit ja setterit
-	public Vieras(Long id, String etunimi, String sukunimi, String osallistuminen, String ruokavalio) {
-		super();
-		this.id = id;
-		this.etunimi = etunimi;
-		this.sukunimi = sukunimi;
-		this.osallistuminen = osallistuminen;
-		this.ruokavalio = ruokavalio;
+	// Luodaan entity tyyppinen luokkaolio EiVieras, jolle annetaan tarvittavat attribuutit sekä getterit ja setterit
+	public EiVieras(Long id, String etunimi, String sukunimi, String osallistuminen) {
+			super();
+			this.id = id;
+			this.etunimi = etunimi;
+			this.sukunimi = sukunimi;
+			this.osallistuminen = osallistuminen;
+			
 	}  
-	
-	public Vieras() {}
+		
+	public EiVieras() {}
 
-	
 	public Long getId() {
 		return id;
 	}
@@ -61,22 +58,12 @@ public class Vieras {
 		this.osallistuminen = osallistuminen;
 	}
 
-	public String getRuokavalio() {
-		return ruokavalio;
-	}
-
-	public void setRuokavalio(String ruokavalio) {
-		this.ruokavalio = ruokavalio;
-	}
-
 	@Override
 	public String toString() {
-		return "Vieras [id=" + id + ", etunimi=" + etunimi + ", sukunimi=" + sukunimi + ", osallistuminen="
-				+ osallistuminen + ", ruokavalio=" + ruokavalio + "]";
-	}  
-	
-	
-	
-	
+		return "EiVieras [id=" + id + ", etunimi=" + etunimi + ", sukunimi=" + sukunimi + ", osallistuminen="
+				+ osallistuminen + "]";
+	} 
+		
+
 
 }

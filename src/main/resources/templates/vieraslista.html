@@ -5,7 +5,8 @@
     <title>Vieraslista</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
     <link  href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"  integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous"  /> 
-    <style>  
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous"> 
+<style>  
 body {
   background-image: url("https://cdn.pixabay.com/photo/2016/11/22/19/05/couple-1850073_960_720.jpg"); 
    
@@ -35,7 +36,7 @@ a {
 color: white;
  }  
  
-.container {
+.container-lg {
   background-color: grey;  
   opacity: 0.6;
   width: 700px; 
@@ -47,8 +48,21 @@ color: white;
   left: 45%;  
   bottom: 10%; 
   overflow: scroll; 
-}
+} 
 
+.container-md {
+  background-color: grey;  
+  opacity: 0.6;
+  width: 700px; 
+  height: 600px;
+  border: 15px navy blue;
+  padding: 50px;
+  margin: 10px;  
+  position: fixed;
+  left: 45%;  
+  bottom: -50%; 
+  overflow-x: scroll; 
+} 
  
 
 h1{ 
@@ -58,7 +72,15 @@ h1{
   bottom: 45%; 
   font-family: Lucida Handwriting, cursive; 
   font-size: 70px;
-} 
+}  
+
+i {
+  color: black; 
+  width: 180%;	
+ } 
+ 
+ 
+
 
 /* width */
 ::-webkit-scrollbar {
@@ -79,51 +101,65 @@ h1{
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #b30000; 
+  background: black; 
 }
  
 </style>
 </head> 
 
 <body>  
-
-
+	
 	<div>
 		<h1>Vieraat</h1>
-	</div>
-	 <div class="col-md-4">
-	 <!--   <h3 th:inline="text">Welcome [[${#httpServletRequest.remoteUser}]]</h3> -->
-	</div>
-	 
-<!--  	<div >
-		<form th:action="@{/logout}" method="post">
-			<input type="submit" value="Sign Out" class="btn btn-sm btn-danger"/>
-		</form>
-	</div>  -->
-		 
-		 <div class="container"> 
-		 <h2>Osallistujat</h2>
-		<table class="table table-success table-striped">
+		<div class="container-xl">
+			<div class="container-lg"> 
+		 		<h2>Osallistujat</h2> 
+			 	<!-- luodaan taulukko, johon haetaan tallennettujen vieraiden tiedot -->
+				<table class="table table-success table-striped">
 		
-		<thead>
-		<tr class="table-secondary">
-		    <th scope="col">Etunimi</th>
-		    <th scope="col">Sukunimi</th> 
-		    <th scope="col">Ruokavalio</th> 
-		</tr>  
-		</thead>  
-		<tbody>
-    	<tr th:each = "vieras : ${vieraat}">
-    		<td th:text="${vieras.etunimi}"></td>
-    		<td th:text="${vieras.sukunimi}"></td> 
-    		<td th:text="${vieras.ruokavalio}"></td> 
-    		
- 			<!--   <td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/delete/{id}(id=${book.id})}" class="btn btn-xs btn-danger">Delete</a></td>	-->    
- 			<td><a th:href="@{/edit/{id}(id=${vieras.id})}" class="bi bi-brush-fill">Edit</a></td>			
-    	</tr> 
-    	</tbody>
-     </table>   
-     <div class="btn btn-dark" > <a href="/">Takaisin ilmoittautumiseen</a></div> 
+					<thead>
+						<tr class="table-secondary">
+		    				<th scope="col">Etunimi</th>
+		    				<th scope="col">Sukunimi</th> 
+		    				<th scope="col">Ruokavalio</th> 
+						</tr>  
+					</thead>  
+					<tbody>
+    					<tr th:each = "vieras : ${vieraat}">
+    						<td th:text="${vieras.etunimi}"></td>
+    						<td th:text="${vieras.sukunimi}"></td> 
+    						<td th:text="${vieras.ruokavalio}"></td> 	  
+ 							<td><a th:href="@{/edit/{id}(id=${vieras.id})}"><i class="fas fa-pen"></i></a></td>	   
+ 							<!-- vain admin oikeuden omaava käyttäjä voi poistaa vieraita -->		 
+ 							<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/delete/{id}(id=${vieras.id})}"><i class="far fa-trash-alt"></i></a></td>
+    					</tr>  
+    				</tbody>
+     			 </table>   
+     			<div class="btn btn-dark" > <a href="/">Takaisin ilmoittautumiseen</a></div> 
+    		 	<br><br>
+     			<div sec:authorize="hasAuthority('ADMIN')"> 
+		 		<h2>Ei pääse paikalle</h2> 
+		 		<!-- luodaan taulukko, johon haetaan tallennettujen vieraiden tiedot -->
+	 			<table class="table table-success table-striped">
+		
+				<thead>
+					<tr class="table-secondary">
+		   				<th scope="col">Etunimi</th>
+		    			<th scope="col">Sukunimi</th>  
+					</tr>  
+				</thead>  
+				<tbody>
+    				<tr th:each = "vieras : ${eiTulevat}">
+    					<td th:text="${vieras.etunimi}"></td>
+    					<td th:text="${vieras.sukunimi}"></td>  	  
+ 						<td><a th:href="@{/edit/{id}(id=${vieras.id})}"><i class="fas fa-pen"></i></a></td>	   		 
+ 						<td><a th:href="@{/delete/{id}(id=${vieras.id})}"><i class="far fa-trash-alt"></i></a></td>
+    				</tr>  
+    			</tbody>
+    	 		</table>    
+     		</div>  
+     	</div> 
+     </div> 
      </div>
 </body>
 </html>

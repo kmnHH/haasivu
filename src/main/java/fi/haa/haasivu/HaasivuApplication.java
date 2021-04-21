@@ -7,6 +7,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import fi.haa.haasivu.domain.EiTulevatRepo;
+import fi.haa.haasivu.domain.EiVieras;
 import fi.haa.haasivu.domain.Kayttaja;
 import fi.haa.haasivu.domain.KayttajaRepository;
 import fi.haa.haasivu.domain.Vieras;
@@ -24,22 +26,30 @@ public class HaasivuApplication {
 	} 
 	
 	@Bean
-	public CommandLineRunner vierasEsim(VierasRepo repo, KayttajaRepository kayttajaRepo) {
+	public CommandLineRunner vierasEsim(VierasRepo repo, KayttajaRepository kayttajaRepo, EiTulevatRepo eiTulevatRepo) {
 		return (args) -> {
 			log.info("save a couple of books");
 			
+			// luodaan sivulle yksi esimerkki vieras
+			repo.save(new Vieras(1L, "Essi", "Esimerkki", "Kyllä", "kasvis"));   
+			repo.save(new Vieras(2L, "Jarmo", "Tahvainen", "Kyllä", "Kaikki käy")); 
+			repo.save(new Vieras(3L, "Hemuli", "Örn", "Kyllä", "Ei ole preferenssejä")); 
+			eiTulevatRepo.save(new EiVieras(4L, "Helmi", "Örn", "Ei"));
 			
-			repo.save(new Vieras(1L, "Essi", "Esimerkki", "Kyllä", "kasvis"));  
-				
-			//Create users: admin/admin user/user
+			// luodaan sivulle kaksi eri käyttäjää: admin/admin user/user
 			Kayttaja user1 = new Kayttaja("user", "$2a$06$3jYRJrg0ghaaypjZ/.g4SethoeA51ph3UD4kZi9oPkeMTpjKU5uo6", "USER");
 			Kayttaja user2 = new Kayttaja("admin", "$2a$10$0MMwY.IQqpsVc1jC8u7IJ.2rT8b0Cd3b3sfIBGV2zfgnPGtT4r0.C", "ADMIN");
 			kayttajaRepo.save(user1);
 			kayttajaRepo.save(user2);
 			
-			log.info("fetch all vieraat");
+			//tarkistetaan konsolissa että vieraat ovat tallentuneet repoon
+			log.info("vieraat");
 			for (Vieras vieras : repo.findAll()) {
 				log.info(vieras.toString());
+			}  
+			log.info("eivieraat");
+			for (EiVieras eivieras : eiTulevatRepo.findAll()) {
+				log.info(eivieras.toString());
 			}
 
 		};
