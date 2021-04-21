@@ -64,6 +64,7 @@ public class VierasController {
 		}
 	}  
 	
+	 @PreAuthorize("hasAuthority('ADMIN')")
 	 @RequestMapping(value = "/edit/{id}",method = RequestMethod.GET) 
 	 	public String muokkaaVieras(@PathVariable("id") Long vierasId, Model model) { 
 		// mahdollistetaan vieraan tietojen muokkaaminen hyödyntämällä vieraan id-arvoa ja tallentamalla uudet tiedot vieraan olioon

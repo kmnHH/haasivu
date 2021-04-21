@@ -104,13 +104,14 @@ i {
     						<td th:text="${vieras.etunimi}"></td>
     						<td th:text="${vieras.sukunimi}"></td> 
     						<td th:text="${vieras.ruokavalio}"></td> 	  
- 							<td><a th:href="@{/edit/{id}(id=${vieras.id})}"><i class="fas fa-pen"></i></a></td>	   
- 							<!-- vain admin oikeuden omaava käyttäjä voi poistaa vieraita -->		 
+    						<!-- vain admin oikeuden omaava käyttäjä voi poistaa ja muokata vieraita --> 
+ 							<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/edit/{id}(id=${vieras.id})}"><i class="fas fa-pen"></i></a></td>	   		 
  							<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/delete/{id}(id=${vieras.id})}"><i class="far fa-trash-alt"></i></a></td>
     					</tr>  
     				</tbody>
      			 </table>   
-     			<div class="btn btn-dark" > <a href="/">Takaisin ilmoittautumiseen</a></div> 
+     			<div class="btn btn-dark" > <a href="/">Takaisin ilmoittautumiseen</a></div>  
+     			<p> (Ilmoitathan mahdolliset muutokset ruokavalioon tai ilmottautumiseen admin-käyttäjälle)</p>
     		 	<br><br> 
     		 	<!-- Vain Admin oikeuden omaava voi nähdä ei tulevien vieraiden listan -->
      			<div sec:authorize="hasAuthority('ADMIN')"> 

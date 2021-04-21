@@ -87,20 +87,17 @@ text-align: center;
 	<div class="container-md">
 		<p><b> Kiitos ilmottautumisestasi!</b></p>   
 		<p>Sujuvan paikan päälle löytämisen helpottamiseksi tässä vielä kartta lokaatiosta</p>
-		
 	</div>  
 	<div class="container-sm"> 
 			<iframe  height="240" 
-			width="240"
-		
-				src="https://maps.google.com/maps?width=220&amp;height=200&amp;hl=en&amp;q=Korkeavuorenkatu%2012,%2000120%20Helsinki+(Haapaikka)&amp;t=&amp;z=13&amp;ie=UTF8&amp;iwloc=B&amp;output=embed">
+					 width="240"
+		             src="https://maps.google.com/maps?width=220&amp;height=200&amp;hl=en&amp;q=Korkeavuorenkatu%2012,%2000120%20Helsinki+(Haapaikka)&amp;t=&amp;z=13&amp;ie=UTF8&amp;iwloc=B&amp;output=embed">
 			</iframe>  
 			<p><br> </p>
 			<form th:action="@{vieraslista}" action="#" method="post"> 
-			<div style="clear: both; display: block; height: 20px;"> 
-			</div>
-			<input style="height: 40px; width: 90px" type="submit" value="Vieraslista"></input>
-		</form> 
-		</div>
+				<div style="clear: both; display: block; height: 20px;"></div>
+				<input style="height: 40px; width: 90px" type="submit" value="Vieraslista"></input>
+		    </form> 
+	</div>
 </body>
 </html>
